@@ -58,7 +58,7 @@ class ChatServer < GServer
       @clients[ sender ].close
       @clients.delete( sender )    
       server_msg = "User #{sender} has quit the chat."
-    when /nick$/
+    when /nick \w/
       new_nick = msg.split(' ').last
       unless @clients.has_key?( new_nick )
         @clients[ new_nick ] = @clients.delete( sender )

@@ -17,7 +17,7 @@ class AuthServer
   # Authentication sequence executed initializing the class
   def initialize( port = 24842, debug = true )
     @debug = debug
-    data = YAML.load_file( Dir.pwd + '/passwd' )    
+    data = YAML.load_file( File.dirname(__FILE__) + '/passwd' )    
     auth_server = TCPServer.new( port )
     auth_sequence( port, data, auth_server )
   end
@@ -85,10 +85,9 @@ class AuthServer
       result = "AUTHORIZED"
       debug_msg "AUTHORIZED \"#{user}\". Closing session. #{Time.now}"
     else
-      result "NOT AUTHORIZED"
+      result = "NOT AUTHORIZED"
       debug_msg "NOT AUTHORIZED \"#{user}\". password mismatch. Closing session. #{Time.now}"
     end
-    sleep 10
     session.puts result
     session.close
     return result
